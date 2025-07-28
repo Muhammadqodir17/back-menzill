@@ -10,4 +10,7 @@ class Title(BaseModel):
         return f'{self.name}'
 
 
-
+class Header(BaseModel):
+    title = models.CharField(max_length=250)
+    description = models.TextField()
+    bg_image = models.ImageField(upload_to="header")

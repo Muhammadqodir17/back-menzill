@@ -1,5 +1,12 @@
 from rest_framework import serializers
 from catalog.models import Catalog, Material, Product
+from .models import Header
+
+
+class HeaderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Header
+        fields = ['id', 'title', 'description', 'image']
 
 
 class NestedProductSerializer(serializers.ModelSerializer):

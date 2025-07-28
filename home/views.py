@@ -2,14 +2,24 @@ from rest_framework.viewsets import ViewSet
 from rest_framework import status
 from rest_framework.response import Response
 from catalog.models import Catalog, Product, Material
-from .serializers import *
+from .serializers import HeaderSerializer, GetProductsSerializer, GetMaterialsSerializer
+from .models import Header
 from drf_yasg.utils import swagger_auto_schema
-from drf_yasg import openapi
 
 
 class HomeViewSet(ViewSet):
+    @swagger_auto_schema(
+        operation_description="Get Header",
+        operation_summary="Get Header",
+        responses={
+            200: HeaderSerializer(),
+        },
+        tags=['home']
+    )
     def header(self, request, *args, **kwargs):
-        pass
+        headers = Header.objects.all()
+        serializer = HeaderSerializer(headers, many=True, context={'request': request})
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     @swagger_auto_schema(
         operation_description="Get Products By Catalog Id",
