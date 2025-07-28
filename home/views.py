@@ -2,9 +2,10 @@ from rest_framework.viewsets import ViewSet
 from rest_framework import status
 from rest_framework.response import Response
 from catalog.models import Catalog, Product, Material
-from .serializers import HeaderSerializer, GetProductsSerializer, GetMaterialsSerializer
-from .models import Header
+from .serializers import HeaderSerializer, GetProductsSerializer, GetMaterialsSerializer, PartnersSeriallizer
+from .models import Header, Partners
 from drf_yasg.utils import swagger_auto_schema
+
 
 
 class HomeViewSet(ViewSet):
@@ -55,3 +56,18 @@ class HomeViewSet(ViewSet):
         materials = Material.objects.filter(catalog=catalog).first()
         serializer = GetMaterialsSerializer(materials, context={'request': request})
         return Response(data=serializer.data, status=status.HTTP_200_OK)
+    
+    @swagger_auto_schema(
+        operation_description="Get Partners",
+        operation_summary="Get Partners",
+        responses={
+            200: PartnersSeriallizer(),
+        },
+        tags=['home']
+    )
+    def get_partners(self, request, *args, **kwargs):
+        parners =  Partners.objects.all().first()
+        serializer = PartnersSeriallizer(parners, context={'request': request})
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+    

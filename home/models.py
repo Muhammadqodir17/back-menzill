@@ -2,6 +2,7 @@ from django.db import models
 from core.base import BaseModel
 
 
+
 class Title(BaseModel):
     name = models.CharField(max_length=250)
     name2 = models.CharField(max_length=250, blank=True, null=True)
@@ -17,3 +18,13 @@ class Header(BaseModel):
 
     def __str__(self):
         return f'{self.title}'
+    
+
+class Partners(BaseModel):
+    title = models.ForeignKey(Title, on_delete=models.CASCADE, blank=True)
+    image = models.ImageField(upload_to="parners", blank=True)
+
+    def __str__(self):
+        return f'{self.title.name}'
+    
+

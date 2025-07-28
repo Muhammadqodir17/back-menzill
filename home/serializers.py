@@ -1,6 +1,28 @@
 from rest_framework import serializers
 from catalog.models import Catalog, Material, Product
-from .models import Header
+from .models import Header, Partners
+
+
+class GetParnersSerializer(serializers.ModelSerializer):
+    class Meta: 
+        model = Partners
+        fields = ['id', 'image']
+
+class PartnersSeriallizer(serializers.ModelSerializer):
+    partners = serializers.SerializerMethodField()
+    class Meta:
+        model = Partners
+        fields = ['id', 'title', 'partners']
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["title"] = instance.title.name
+        return data
+    
+    def get_partners(self, obj):
+        request = self.context.get("request")
+        partners = Partners.objects.all()
+        return GetParnersSerializer(partners, many=True, context={"request": request}).data
 
 
 class HeaderSerializer(serializers.ModelSerializer):
