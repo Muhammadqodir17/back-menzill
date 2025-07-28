@@ -4,9 +4,11 @@ from core.base import BaseModel
 
 class Title(BaseModel):
     name = models.CharField(max_length=250)
+    name2 = models.CharField(max_length=250, blank=True, null=True)
 
     def __str__(self):
         return f'{self.name}'
+
 
 class Header(BaseModel):
     title = models.CharField(max_length=250)
