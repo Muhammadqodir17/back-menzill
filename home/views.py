@@ -17,8 +17,8 @@ class HomeViewSet(ViewSet):
         tags=['home']
     )
     def header(self, request, *args, **kwargs):
-        headers = Header.objects.all()
-        serializer = HeaderSerializer(headers, many=True, context={'request': request})
+        headers = Header.objects.all().first()
+        serializer = HeaderSerializer(headers, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     @swagger_auto_schema(
@@ -34,6 +34,9 @@ class HomeViewSet(ViewSet):
         if catalog is None:
             return Response(data={'error': 'Catalog not found'}, status=status.HTTP_404_NOT_FOUND)
         products = Product.objects.filter(catalog=catalog).first()
+        print('=' * 100)
+        print(products)
+        print('=' * 100)
         serializer = GetProductsSerializer(products, context={'request': request})
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
@@ -45,7 +48,7 @@ class HomeViewSet(ViewSet):
         },
         tags=['home']
     )
-    def get_material(self, request, *args, **kwargs):
+    def get_materials(self, request, *args, **kwargs):
         catalog = Catalog.objects.filter(id=kwargs['pk']).first()
         if catalog is None:
             return Response(data={'error': 'Catalog not found'}, status=status.HTTP_404_NOT_FOUND)
