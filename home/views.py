@@ -2,9 +2,10 @@ from rest_framework.viewsets import ViewSet
 from rest_framework import status
 from rest_framework.response import Response
 from catalog.models import Catalog, Product, Material
-from .serializers import HeaderSerializer, GetProductsSerializer, GetMaterialsSerializer
-from .models import Header
+from .serializers import HeaderSerializer, GetProductsSerializer, GetMaterialsSerializer, PartnersSeriallizer
+from .models import Header, Partners
 from drf_yasg.utils import swagger_auto_schema
+
 
 
 class HomeViewSet(ViewSet):
@@ -17,8 +18,8 @@ class HomeViewSet(ViewSet):
         tags=['home']
     )
     def header(self, request, *args, **kwargs):
-        headers = Header.objects.all()
-        serializer = HeaderSerializer(headers, many=True, context={'request': request})
+        headers = Header.objects.all().first()
+        serializer = HeaderSerializer(headers, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     @swagger_auto_schema(
@@ -34,6 +35,9 @@ class HomeViewSet(ViewSet):
         if catalog is None:
             return Response(data={'error': 'Catalog not found'}, status=status.HTTP_404_NOT_FOUND)
         products = Product.objects.filter(catalog=catalog).first()
+        print('=' * 100)
+        print(products)
+        print('=' * 100)
         serializer = GetProductsSerializer(products, context={'request': request})
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
@@ -45,10 +49,25 @@ class HomeViewSet(ViewSet):
         },
         tags=['home']
     )
-    def get_material(self, request, *args, **kwargs):
+    def get_materials(self, request, *args, **kwargs):
         catalog = Catalog.objects.filter(id=kwargs['pk']).first()
         if catalog is None:
             return Response(data={'error': 'Catalog not found'}, status=status.HTTP_404_NOT_FOUND)
         materials = Material.objects.filter(catalog=catalog).first()
         serializer = GetMaterialsSerializer(materials, context={'request': request})
         return Response(data=serializer.data, status=status.HTTP_200_OK)
+    
+    @swagger_auto_schema(
+        operation_description="Get Partners",
+        operation_summary="Get Partners",
+        responses={
+            200: PartnersSeriallizer(),
+        },
+        tags=['home']
+    )
+    def get_partners(self, request, *args, **kwargs):
+        parners =  Partners.objects.all().first()
+        serializer = PartnersSeriallizer(parners, context={'request': request})
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+    
