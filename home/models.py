@@ -13,4 +13,7 @@ class Title(BaseModel):
 class Header(BaseModel):
     title = models.CharField(max_length=250)
     description = models.TextField()
-    bg_image = models.ImageField(upload_to="header")
+    bg_image = models.ImageField(upload_to="header", blank=True)
+
+    def __str__(self):
+        return f'{self.title}'
