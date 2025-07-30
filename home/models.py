@@ -22,7 +22,7 @@ class Header(BaseModel):
 
 class Partners(BaseModel):
     title = models.ForeignKey(Title, on_delete=models.CASCADE, blank=True)
-    image = models.ImageField(upload_to="parners", blank=True)
+    image = models.ImageField(upload_to="partners/", blank=True)
 
     def __str__(self):
         return f'{self.title.name}'
