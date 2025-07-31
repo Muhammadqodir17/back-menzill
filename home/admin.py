@@ -1,6 +1,5 @@
 from django.contrib import admin
-from .models import Title, Header, Partners
+from .models import *
 
-admin.site.register(Title)
-admin.site.register(Header)
-admin.site.register(Partners)
+admin.site.register(GalleryTitle)
+admin.site.register(title)
