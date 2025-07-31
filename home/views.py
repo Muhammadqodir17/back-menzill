@@ -70,4 +70,16 @@ class HomeViewSet(ViewSet):
         serializer = PartnersSeriallizer(parners, context={'request': request})
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
-    
+
+class SocialViewSet(ViewSet):
+
+    @swagger_auto_schema(
+        operation_description="Get all social links",
+        operation_summary="Get Socials",
+        responses={200: SocialSerializer(many=True)},
+        tags=['social']
+    )
+    def get_social(self, request, *args, **kwargs):
+        socials = Social.objects.all()
+        serializer = SocialSerializer(socials, many=True, context={'request': request})
+        return Response(serializer.data, status=status.HTTP_200_OK)

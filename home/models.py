@@ -26,5 +26,13 @@ class Partners(BaseModel):
 
     def __str__(self):
         return f'{self.title.name}'
-    
+
+
+
+class Social(BaseModel):
+    link = models.URLField()
+    image = models.ImageField(upload_to="social", blank=True)
+
+    def __str__(self):
+        return f'{self.link}'
 

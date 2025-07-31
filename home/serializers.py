@@ -81,3 +81,9 @@ class GetMaterialsSerializer(serializers.ModelSerializer):
         request = self.context.get('request')
         materials = Material.objects.filter(catalog=obj.catalog)
         return NestedProductSerializer(materials, many=True, context={'request': request}).data
+
+
+class SocialSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Social
+        fields = ['id', 'link', 'image']

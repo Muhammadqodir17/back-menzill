@@ -2,7 +2,7 @@ from django.db import models
 from home.models import Title
 from core.base import BaseModel
 
-class GalleryTitle(models.Model):
+class GalleryTitle(BaseModel):
     main_title  = models.ForeignKey(Title, on_delete=models.CASCADE, blank=True)
     title = models.CharField(max_length=250)
 
