@@ -5,13 +5,11 @@ from home.models import Title
 
 
 class AboutModel(BaseModel):
-    title = models.ForeignKey(Title, on_delete=models.CASCADE, related_name='about', verbose_name=_('Related Title'))
-    name = models.CharField(max_length=100, verbose_name=_("Name"), help_text=_("Enter the name for the About"))
-    description = models.TextField(verbose_name=_("Description"), help_text=_("Enter the description for the About"))
-    image_1 = models.ImageField(upload_to='about/', verbose_name=_("Image"),
-                                help_text=_("Upload an image 1 for the About"), )
-    image_2 = models.ImageField(upload_to='about/', verbose_name=_("Image"),
-                                help_text=_("Upload an image 2 for the About"), )
+    title = models.ForeignKey(Title, on_delete=models.CASCADE, related_name='about')
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+    image_1 = models.ImageField(upload_to='about/')
+    image_2 = models.ImageField(upload_to='about/')
 
     class Meta:
         verbose_name = _("About")
@@ -23,12 +21,10 @@ class AboutModel(BaseModel):
 
 
 class PrincipleModel(BaseModel):
-    title = models.ForeignKey(Title, on_delete=models.CASCADE, related_name='principle',
-                              verbose_name=_('Related Title'))
-    name = models.CharField(max_length=100, verbose_name=_('Name'), help_text=_('Enter the name for the Principle'))
-    description = models.TextField(verbose_name=_('Description'), help_text=_('Enter principle description text'))
-    icon = models.ImageField(upload_to='principle/', verbose_name=_('Icon'),
-                             help_text=_('Upload an icon for the Principle'))
+    title = models.ForeignKey(Title, on_delete=models.CASCADE, related_name='principle')
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+    icon = models.ImageField(upload_to='principle/')
 
     class Meta:
         verbose_name = _('Principle')
