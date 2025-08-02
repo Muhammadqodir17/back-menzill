@@ -1,9 +1,9 @@
 from rest_framework.viewsets import ViewSet
 from rest_framework import status
 from rest_framework.response import Response
-from catalog.models import Catalog, Product, Material
-from .serializers import HeaderSerializer, GetProductsSerializer, GetMaterialsSerializer, PartnersSeriallizer
-from .models import Header, Partners
+from catalog.models import Catalog, Product, Materia
+from .serializers import HeaderSerializer, GetProductsSerializer, GetMaterialsSerializer, PartnersSeriallizer, SocialMediaSerializer
+from .models import Header, Partners, SocialMedia
 from drf_yasg.utils import swagger_auto_schema
 
 
@@ -71,15 +71,15 @@ class HomeViewSet(ViewSet):
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
 
-class SocialViewSet(ViewSet):
+class SocialMediaViewSet(ViewSet):
 
     @swagger_auto_schema(
         operation_description="Get all social links",
         operation_summary="Get Socials",
-        responses={200: SocialSerializer(many=True)},
-        tags=['social']
+        responses={200: SocialMediaSerializer(many=True)},
+        tags=['home']
     )
-    def get_social(self, request, *args, **kwargs):
-        socials = Social.objects.all()
-        serializer = SocialSerializer(socials, many=True, context={'request': request})
+    def get_social_media(self, request, *args, **kwargs):
+        socials = SocialMedia.objects.all()
+        serializer = SocialMediaSerializer(socials, many=True, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)

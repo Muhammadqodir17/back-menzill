@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from catalog.models import Catalog, Material, Product
-from .models import Header, Partners
+from .models import Header, Partners, SocialMedia
 
 
 class GetParnersSerializer(serializers.ModelSerializer):
@@ -83,7 +83,7 @@ class GetMaterialsSerializer(serializers.ModelSerializer):
         return NestedProductSerializer(materials, many=True, context={'request': request}).data
 
 
-class SocialSerializer(serializers.ModelSerializer):
+class SocialMediaSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Social
+        model = SocialMedia
         fields = ['id', 'link', 'image']

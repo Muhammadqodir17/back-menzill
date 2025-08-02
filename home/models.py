@@ -29,7 +29,8 @@ class Partners(BaseModel):
 
 
 
-class Social(BaseModel):
+class SocialMedia(BaseModel):
+    name = models.CharField(max_length=250)
     link = models.URLField()
     image = models.ImageField(upload_to="social", blank=True)
 
