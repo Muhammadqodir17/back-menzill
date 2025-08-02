@@ -1,5 +1,4 @@
 from django.contrib import admin
-from .models import *
+from gallery.models import GalleryModel
 
-admin.site.register(GalleryTitle)
-admin.site.register(title)
+admin.site.register(GalleryModel)

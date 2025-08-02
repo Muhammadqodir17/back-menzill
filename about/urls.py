@@ -1,5 +1,7 @@
 from django.urls import path
+from .views import AboutViewSet, PrincipleViewSet
 
 urlpatterns = [
-    # path('admin/', CatalogViewSet.as_view({'get': 'filter_choices'}), name='filter_choices'),
+    path('', AboutViewSet.as_view({'get': 'list'}), name='about'),
+    path('principles/', PrincipleViewSet.as_view({'get': 'list'}), name='principle'),
 ]

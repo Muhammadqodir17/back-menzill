@@ -1,19 +1,17 @@
 from django.db import models
-from home.models import Title
+from django.utils.translation import gettext_lazy as _
 from core.base import BaseModel
-
-class GalleryTitle(BaseModel):
-    main_title  = models.ForeignKey(Title, on_delete=models.CASCADE, blank=True)
-    title = models.CharField(max_length=250)
-
-    def __str__(self):
-        return f"{self.main_title} ({self.title})"
+from home.models import Title
 
 
-class Gallery(BaseModel):
-    title = models.ForeignKey(GalleryTitle, on_delete=models.CASCADE, related_name='galleries')
-    description = models.TextField()
-    image = models.ImageField(upload_to="gallery", blank=True)
+class GalleryModel(BaseModel):
+    title = models.ForeignKey(Title, on_delete=models.CASCADE, related_name='gallery')
+    image = models.ImageField(upload_to='gallery/')
+
+    class Meta:
+        verbose_name = _('Gallery')
+        verbose_name_plural = _('Galleries')
+        db_table = 'gallery'
 
     def __str__(self):
-        return f"{self.title.title}"
+        return self.id
